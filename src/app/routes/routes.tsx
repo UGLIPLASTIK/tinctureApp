@@ -1,9 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import BaseTinctures from '../../pages/BaseTinctures';
-import BonusTinctures from '../../pages/BonusTinctures';
 import HomePage from '../../pages/HomePage';
 import NotFoundPage from '../../pages/NotFoundPage';
-import TestTinctures from '../../pages/TestTinctures';
+import ListWrapper from '@/pages/ListWrapper';
 import App from '../App';
 
 const MainRouter = createBrowserRouter([
@@ -13,9 +11,9 @@ const MainRouter = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: '*', element: <NotFoundPage /> },
-      { path: '/baseTinctures', element: <BaseTinctures /> },
-      { path: '/testTinctures', element: <TestTinctures /> },
-      { path: '/bonusTinctures', element: <BonusTinctures /> },
+      { path: '/base', element: <ListWrapper /> },
+      { path: '/test', element: <ListWrapper /> },
+      { path: '/bonus', element: <ListWrapper /> },
     ],
   },
 ]);

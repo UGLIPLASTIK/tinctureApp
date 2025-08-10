@@ -1,33 +1,50 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Car, PartBody } from '@/types/types';
+import type { Tincture } from '../types';
 
-export const carApi = createApi({
-  reducerPath: 'carApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/' }),
-  tagTypes: ['car'],
+export const tinctureApi = createApi({
+  reducerPath: 'tinctureApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://my-tinctures-new-api-production.up.railway.app/',
+  }),
+  tagTypes: ['tinctures'],
   endpoints: (build) => ({
-    getCar: build.query<Car, void>({
-      query: () => 'car',
-      providesTags: ['car'],
+    getTinctureLists: build.query<Tincture[], void>({
+      query: () => 'items',
+      providesTags: ['tinctures'],
     }),
-    addPart: build.mutation<Car, PartBody>({
+
+    addTincture: build.mutation<null, Omit<Tincture, 'id'>>({
       query: (body) => ({
-        url: 'parts',
+        url: 'items',
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['car'],
+      invalidatesTags: ['tinctures'],
     }),
-    deletePart: build.mutation<Car, PartBody>({
+
+    deleteTincture: build.mutation<Tincture[], Pick<Tincture, 'id'>>({
       query: (body) => ({
-        url: 'parts',
+        url: 'items',
         method: 'DELETE',
         body,
       }),
-      invalidatesTags: ['car'],
+      invalidatesTags: ['tinctures'],
+    }),
+
+    editTincture: build.mutation<Tincture[], Omit<Tincture, 'id'>>({
+      query: (body) => ({
+        url: 'items',
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['tinctures'],
     }),
   }),
 });
 
-export const { useGetCarQuery, useAddPartMutation, useDeletePartMutation } =
-  carApi;
+export const {
+  useGetTinctureListsQuery,
+  useAddTinctureMutation,
+  useDeleteTinctureMutation,
+  useEditTinctureMutation,
+} = tinctureApi;

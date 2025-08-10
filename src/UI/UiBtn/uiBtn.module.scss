@@ -1,0 +1,11 @@
+.uiBtn {
+  border: 2px solid black;
+  width: 7rem;
+  margin: 0 auto;
+  border-radius: 7px;
+  cursor: pointer;
+  &__light {
+    color: #fff;
+    border-color: #fff;
+  }
+}

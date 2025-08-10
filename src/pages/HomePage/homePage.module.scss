@@ -1,6 +1,12 @@
+@use '../../variables' as vars;
+
 .homePage {
   padding: 30px;
   text-align: center;
+  color: vars.$main-text-color;
+  text-shadow: 0 0 5px vars.$shadow-color, 0 0 10px vars.$shadow-color,
+    0 0 20px vars.$shadow-color, 0 0 40px vars.$shadow-color;
+  font-weight: 700;
   ul {
     font-size: 1.5rem;
     padding: 0;

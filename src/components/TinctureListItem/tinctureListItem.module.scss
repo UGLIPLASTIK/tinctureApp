@@ -1,0 +1,25 @@
+$shadow-color: #1014ec;
+
+.tinctureListItem {
+  color: #fff;
+  text-shadow: 0 0 5px $shadow-color, 0 0 10px $shadow-color,
+    0 0 20px $shadow-color, 0 0 40px $shadow-color;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+
+  .buttonGroup {
+    position: absolute;
+    display: flex;
+    gap: 7px;
+    top: 0;
+    right: 0;
+    .icon {
+      cursor: pointer;
+      &__delete {
+        color: rgb(138, 0, 0);
+      }
+    }
+  }
+}

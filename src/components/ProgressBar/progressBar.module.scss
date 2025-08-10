@@ -1,0 +1,15 @@
+.progressGroup {
+  position: relative;
+  button {
+    cursor: pointer;
+  }
+  .progressControll {
+    position: absolute;
+    font-size: 1.3rem;
+    right: 0;
+    top: 0;
+    display: flex;
+    gap: 5px;
+    transform: translate(35px, -5px);
+  }
+}

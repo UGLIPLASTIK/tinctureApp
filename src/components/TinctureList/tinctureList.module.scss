@@ -1,0 +1,30 @@
+@use '../../variables' as vars;
+
+.list {
+  text-align: center;
+  padding: 30px;
+  color: vars.$main-text-color;
+  .header {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    button {
+      margin: 0;
+      width: 2rem;
+    }
+    h3 {
+      text-decoration: none;
+      text-shadow: 0 0 5px vars.$shadow-color, 0 0 10px vars.$shadow-color,
+        0 0 20px vars.$shadow-color, 0 0 40px vars.$shadow-color;
+    }
+  }
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
