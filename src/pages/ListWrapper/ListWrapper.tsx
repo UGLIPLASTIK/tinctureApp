@@ -1,19 +1,26 @@
 import TinctureList from '@/components/TinctureList';
 import { selectListBySector } from '@/store/slices/tincturesSlice/tincturesSelectors';
 import type { Sector, Tincture } from '@/types';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { setCurrentSector } from '@/store/slices/tincturesSlice/tincturesSlice';
 
 const ListWrapper = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
   const listSector = location.pathname.replace('/', '') as Sector;
-  const tinctures = useSelector(selectListBySector);
+
+  useEffect(() => {
+    dispatch(setCurrentSector(listSector));
+  });
 
   const listTitles: Record<Sector, string> = {
     base: 'Основные настойки',
     bonus: 'Бонусные настойки',
     test: 'Тестовые настойки',
   };
+  const tinctures = useSelector(selectListBySector);
 
   return (
     <TinctureList

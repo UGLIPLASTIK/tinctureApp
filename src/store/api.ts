@@ -31,7 +31,7 @@ export const tinctureApi = createApi({
       invalidatesTags: ['tinctures'],
     }),
 
-    editTincture: build.mutation<Tincture[], Omit<Tincture, 'id'>>({
+    editTincture: build.mutation<Tincture[], Tincture>({
       query: (body) => ({
         url: 'items',
         method: 'PUT',

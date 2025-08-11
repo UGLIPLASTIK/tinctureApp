@@ -1,9 +1,13 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import type { Tincture } from '@/types';
+import { debounce } from '@/utils/utils';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Popconfirm } from 'antd';
-import styles from './tinctureListItem.module.scss';
 import classNames from 'classnames';
+import { useReducer, useState } from 'react';
 import ProgressBar from '../ProgressBar';
+import styles from './tinctureListItem.module.scss';
+import { reducerQauntity } from './TinctureListItem.utils';
+import { useEditTinctureMutation } from '@/store/api';
 
 type Props = {
   tincture: Tincture;
@@ -13,6 +17,23 @@ type Props = {
 
 const TinctureListItem = ({ tincture, deleteHandler, startEdit }: Props) => {
   const { actual_quantity, name, recommended_quantity } = tincture;
+  const [changing, setChanging] = useState(false);
+  const [editTincture] = useEditTinctureMutation();
+
+  const [bufferQuantity, dispatchQuantity] = useReducer(
+    reducerQauntity,
+    actual_quantity
+  );
+
+  const debouncedChanger = debounce(async () => {
+    await editTincture({ ...tincture, actual_quantity: bufferQuantity - 0.25 });
+  }, 600);
+
+  const handleChangeQuantity = (action: '+' | '-') => {
+    dispatchQuantity({ type: action });
+    setChanging(true);
+    debouncedChanger();
+  };
 
   return (
     <li className={styles.tinctureListItem}>
@@ -38,8 +59,11 @@ const TinctureListItem = ({ tincture, deleteHandler, startEdit }: Props) => {
         </div>
       </div>
       <ProgressBar
-        actual_quantity={actual_quantity}
-        recommended_quantity={recommended_quantity}
+        quantity={{
+          actual_quantity: changing ? bufferQuantity : actual_quantity,
+          recommended_quantity,
+        }}
+        quantityChanger={handleChangeQuantity}
       />
     </li>
   );

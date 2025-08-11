@@ -7,10 +7,8 @@ import { useGetTinctureListsQuery } from '../store/api';
 import { setList } from '@/store/slices/tincturesSlice/tincturesSlice';
 
 function App() {
-  const { data: tinctureData, isLoading } = useGetTinctureListsQuery();
+  const { data: tinctureData } = useGetTinctureListsQuery();
   const dispatch = useDispatch();
-
-  console.log(isLoading);
 
   useEffect(() => {
     if (tinctureData) {

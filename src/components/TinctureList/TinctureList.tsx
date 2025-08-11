@@ -1,12 +1,13 @@
 import { useDeleteTinctureMutation } from '@/store/api';
 import type { DeleteTinctureBody, Tincture, Sector } from '@/types';
 import UiBtn from '@/UI/UiBtn';
-import UiModal from '@/UI/UiModal';
+
 import { sortTinctures } from '@/utils/tincture.utils';
 import classNames from 'classnames';
 import { useState } from 'react';
 import TinctureListItem from '../TinctureListItem';
 import styles from './tinctureList.module.scss';
+import { LazyUiModal } from '@/pages/LazyPages';
 
 type Props = {
   list: Tincture[];
@@ -44,7 +45,7 @@ const TinctureList = ({ list, sector, title }: Props) => {
 
   return (
     <div className={styles.list}>
-      <UiModal
+      <LazyUiModal
         editing={editing}
         editItem={editingItem}
         list={list}

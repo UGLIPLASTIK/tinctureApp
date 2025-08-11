@@ -70,16 +70,16 @@ const UiModal = ({
   const onSubmit: SubmitHandler<Omit<Tincture, 'id'>> = (body) => {
     body = { ...body, name: capitalize(body.name), sector };
     const includes = list.find((tin) => tin.name == body.name);
-    console.log(body);
     if (includes && !editing) {
+      alert('Такое уже есть');
       return;
     } else {
       if (editItem && editing) {
-        editTincture(body);
-        onClose();
+        editTincture({ ...body, id: editItem.id });
       } else addTincture(body);
 
       reset();
+      onClose();
       setTimeout(() => {
         setFocus('name');
       }, 0);
@@ -110,7 +110,7 @@ const UiModal = ({
             autoComplete="name"
             {...register('name', {
               required: true,
-              maxLength: 20,
+              maxLength: 40,
             })}
           />
           {errors.name && <p>Название обязательно</p>}

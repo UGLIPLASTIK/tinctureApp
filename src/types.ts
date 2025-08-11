@@ -23,3 +23,8 @@ export type EditTinctureBody = {
   sector: Sector;
   editItem: Tincture;
 };
+
+export type sortState = {
+  isActive: boolean;
+  state: 'ascending' | 'descending';
+};

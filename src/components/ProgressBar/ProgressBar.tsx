@@ -3,9 +3,14 @@ import { ConfigProvider, Progress } from 'antd';
 import styles from './progressBar.module.scss';
 import type { Tincture } from '@/types';
 
-type Props = Pick<Tincture, 'actual_quantity' | 'recommended_quantity'>;
+type Props = {
+  quantity: Pick<Tincture, 'actual_quantity' | 'recommended_quantity'>;
+  quantityChanger: (action: '+' | '-') => void;
+};
 
-const ProgressBar = ({ actual_quantity, recommended_quantity }: Props) => {
+const ProgressBar = ({ quantity, quantityChanger }: Props) => {
+  const { actual_quantity, recommended_quantity } = quantity;
+
   return (
     <ConfigProvider
       theme={{
@@ -26,8 +31,8 @@ const ProgressBar = ({ actual_quantity, recommended_quantity }: Props) => {
           trailColor="#292b4877"
         />
         <div className={styles.progressControll}>
-          <button onClick={() => null}>-</button>
-          <button onClick={() => null}>+</button>
+          <button onClick={() => quantityChanger('-')}>-</button>
+          <button onClick={() => quantityChanger('+')}>+</button>
         </div>
       </div>
     </ConfigProvider>
