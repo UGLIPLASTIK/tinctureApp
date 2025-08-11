@@ -22,22 +22,22 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react')) {
-              return 'vendor_react';
-            }
-            if (id.includes('antd')) {
-              return 'vendor_antd';
-            }
-            if (id.includes('lodash')) {
-              return 'vendor_lodash';
-            }
-            return 'vendor';
-          }
-        },
-      },
+      // output: {
+      //   manualChunks(id) {
+      //     if (id.includes('node_modules')) {
+      //       if (id.includes('react')) {
+      //         return 'vendor_react';
+      //       }
+      //       if (id.includes('antd')) {
+      //         return 'vendor_antd';
+      //       }
+      //       if (id.includes('lodash')) {
+      //         return 'vendor_lodash';
+      //       }
+      //       return 'vendor';
+      //     }
+      //   },
+      // },
       plugins: [visualizer({ open: true, gzipSize: true, brotliSize: true })],
     },
   },
