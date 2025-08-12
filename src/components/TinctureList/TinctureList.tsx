@@ -54,13 +54,11 @@ const TinctureList = ({ list, sector, title }: Props) => {
         onClose={() => closeModal()}
       />
       <div className={styles.header}>
-        <h3 className={classNames('text-3xl', 'font-bold', 'underline')}>
-          {title}
-        </h3>
+        <h3 className={classNames('text-3xl', 'font-bold')}>{title}</h3>
         <UiBtn
           theme="light"
           action={handleSorting}
-          text={sorting ? '⮃' : '⮁'}
+          styleClass={['sortingBtn', sorting ? 'sortingBtn__down' : '']}
         />
       </div>
       <ul>

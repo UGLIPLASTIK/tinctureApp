@@ -1,17 +1,19 @@
-import style from './uiBtn.module.scss';
+import styles from './uiBtn.module.scss';
 import classNames from 'classnames';
 type Props = {
-  text: string;
+  text?: string;
   theme?: 'light' | 'dark';
   action?: () => void;
+  styleClass?: string[];
 };
 
-const UiBtn = ({ text, action, theme = 'dark' }: Props) => {
+const UiBtn = ({ text, action, theme = 'dark', styleClass = [] }: Props) => {
   return (
     <button
       className={classNames([
-        style.uiBtn,
-        theme == 'light' ? style.uiBtn__light : null,
+        styles.uiBtn,
+        ...styleClass.map((style) => styles[style]),
+        theme == 'light' ? styles.uiBtn__light : null,
       ])}
       onClick={() => (action ? action() : null)}
     >

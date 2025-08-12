@@ -9,3 +9,16 @@
     border-color: #fff;
   }
 }
+
+.sortingBtn {
+  background-image: url(../../assets/sorting-arrow.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  border: none;
+
+  &__down {
+    transform: rotateZ(180deg);
+  }
+}
