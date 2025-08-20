@@ -1,13 +1,17 @@
 import { useDeleteTinctureMutation } from '@/store/api';
-import type { DeleteTinctureBody, Tincture, Sector } from '@/types';
+import {
+  setEditingItem,
+  switchEditing,
+} from '@/store/slices/operationSlice/operationSlice';
+import type { Sector, Tincture } from '@/types';
 import UiBtn from '@/UI/UiBtn';
-
 import { sortTinctures } from '@/utils/tincture.utils';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import TinctureListItem from '../TinctureListItem';
+import TinctureModalContainer from '../TinctureModalContainer';
 import styles from './tinctureList.module.scss';
-import { LazyUiModal } from '@/pages/LazyPages';
 
 type Props = {
   list: Tincture[];
@@ -15,41 +19,44 @@ type Props = {
   title: string;
 };
 
-const TinctureList = ({ list, sector, title }: Props) => {
+const TinctureList = ({ list, title }: Props) => {
   const [deleteTincture, { error }] = useDeleteTinctureMutation();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [sorting, setSorting] = useState(true);
-  const [editing, setEditing] = useState(false);
-  const [editingItem, setEditingItem] = useState<Tincture | null>(null);
+  const [defaultSorting, setDefaultSorting] = useState(true);
+  const dispatch = useDispatch();
 
   const startEdit = (item: Tincture) => {
-    setEditing(true);
-    setEditingItem(item);
+    dispatch(switchEditing(true));
+    dispatch(setEditingItem(item));
     setModalIsOpen(true);
   };
 
-  const handleSorting = () => setSorting((prev) => !prev);
-
-  const handleDeleteTincture = (body: DeleteTinctureBody) => {
-    deleteTincture(body);
-    if (error) console.log(error);
+  const handleSorting = () => {
+    setDefaultSorting(false);
+    setSorting((prev) => !prev);
   };
+
+  const handleDefaultSorting = () => setDefaultSorting((prev) => !prev);
+
+  const handleDeleteTincture = useCallback(
+    (body: Pick<Tincture, 'id'>) => {
+      deleteTincture(body);
+      if (error) console.log(error);
+    },
+    [deleteTincture, error]
+  );
 
   const closeModal = () => {
     setModalIsOpen((prev) => !prev);
-    setEditing(false);
-    setEditingItem(null);
+    dispatch(switchEditing(false));
   };
 
-  const sortedItems = sortTinctures(list, sorting);
+  const sortedItems = sortTinctures(list, sorting, defaultSorting);
 
   return (
     <div className={styles.list}>
-      <LazyUiModal
-        editing={editing}
-        editItem={editingItem}
-        list={list}
-        sector={sector}
+      <TinctureModalContainer
         isOpen={modalIsOpen}
         onClose={() => closeModal()}
       />
@@ -58,7 +65,16 @@ const TinctureList = ({ list, sector, title }: Props) => {
         <UiBtn
           theme="light"
           action={handleSorting}
-          styleClass={['sortingBtn', sorting ? 'sortingBtn__down' : '']}
+          styleClass={[
+            'sortingBtn',
+            'sortingBtn__qantSort',
+            sorting ? 'sortingBtn__down' : '',
+          ]}
+        />{' '}
+        <UiBtn
+          theme="light"
+          action={handleDefaultSorting}
+          styleClass={['sortingBtn', 'sortingBtn__alphaSort']}
         />
       </div>
       <ul>
@@ -68,9 +84,7 @@ const TinctureList = ({ list, sector, title }: Props) => {
               startEdit={startEdit}
               key={tin.id}
               tincture={tin}
-              deleteHandler={() =>
-                handleDeleteTincture({ id: tin.id as string, sector: sector })
-              }
+              deleteHandler={handleDeleteTincture}
             />
           ))
         ) : (

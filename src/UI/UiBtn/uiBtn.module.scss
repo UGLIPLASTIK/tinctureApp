@@ -11,12 +11,19 @@
 }
 
 .sortingBtn {
-  background-image: url(../../assets/sorting-arrow.svg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
   border: none;
+
+  &__qantSort {
+    background-image: url(../../assets/sorting-arrow.svg);
+  }
+
+  &__alphaSort {
+    background-image: url(../../assets/sort-alpha-down.svg);
+  }
 
   &__down {
     transform: rotateZ(180deg);

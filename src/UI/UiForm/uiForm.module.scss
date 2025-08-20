@@ -1,0 +1,41 @@
+@use '../../variables' as vars;
+
+.UiForm {
+  background-color: #fff;
+  color: vars.$main-text-color-dark;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto;
+  border-radius: 15px;
+  text-align: center;
+  .closeBtn {
+    position: absolute;
+    right: 0;
+    font-size: 1.5rem;
+    transform: translateX(30px);
+    cursor: pointer;
+  }
+  label {
+    position: relative;
+    span {
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .errorMessage {
+      color: tomato;
+      font-size: 12px;
+      position: absolute;
+      transform: translate(50%, -50%);
+    }
+  }
+  input {
+    width: 90%;
+    border: 2px solid rgb(184, 182, 182);
+    border-radius: 10px;
+    padding: 4px;
+    display: block;
+    margin: 0 auto;
+  }
+}

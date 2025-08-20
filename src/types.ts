@@ -14,17 +14,9 @@ export type AddTinctureBody = {
   body: Omit<Tincture, 'id'>;
 };
 
-export type DeleteTinctureBody = {
-  sector: Sector;
-  id: string;
-};
-
-export type EditTinctureBody = {
-  sector: Sector;
-  editItem: Tincture;
-};
-
 export type sortState = {
   isActive: boolean;
   state: 'ascending' | 'descending';
 };
+
+export type Role = 'admin' | 'user';

@@ -3,7 +3,7 @@ import { debounce } from '@/utils/utils';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Popconfirm } from 'antd';
 import classNames from 'classnames';
-import { useReducer, useState } from 'react';
+import { useReducer, useState, useMemo, memo } from 'react';
 import ProgressBar from '../ProgressBar';
 import styles from './tinctureListItem.module.scss';
 import { reducerQauntity } from './TinctureListItem.utils';
@@ -11,62 +11,73 @@ import { useEditTinctureMutation } from '@/store/api';
 
 type Props = {
   tincture: Tincture;
-  deleteHandler: () => void;
+  deleteHandler: (body: Pick<Tincture, 'id'>) => void;
   startEdit: (item: Tincture) => void;
 };
 
-const TinctureListItem = ({ tincture, deleteHandler, startEdit }: Props) => {
-  const { actual_quantity, name, recommended_quantity } = tincture;
-  const [changing, setChanging] = useState(false);
-  const [editTincture] = useEditTinctureMutation();
+const TinctureListItem = memo(
+  ({ tincture, deleteHandler, startEdit }: Props) => {
+    const { actual_quantity, name, recommended_quantity, id } = tincture;
+    const [changing, setChanging] = useState(false);
+    const [editTincture] = useEditTinctureMutation();
 
-  const [bufferQuantity, dispatchQuantity] = useReducer(
-    reducerQauntity,
-    actual_quantity
-  );
+    const [bufferQuantity, dispatchQuantity] = useReducer(
+      reducerQauntity,
+      actual_quantity
+    );
 
-  const debouncedChanger = debounce(async () => {
-    await editTincture({ ...tincture, actual_quantity: bufferQuantity - 0.25 });
-  }, 600);
+    const debouncedChanger = useMemo(
+      () =>
+        debounce(async (t: Tincture, qty: number) => {
+          await editTincture({ ...t, actual_quantity: qty });
+        }, 300),
+      [editTincture]
+    );
 
-  const handleChangeQuantity = (action: '+' | '-') => {
-    dispatchQuantity({ type: action });
-    setChanging(true);
-    debouncedChanger();
-  };
+    const handleChangeQuantity = (action: '+' | '-') => {
+      dispatchQuantity({ type: action });
+      setChanging(true);
+      const newQty =
+        action === '+'
+          ? bufferQuantity + 0.25
+          : Math.max(0, bufferQuantity - 0.25);
 
-  return (
-    <li className={styles.tinctureListItem}>
-      <div>
-        <span>{name}</span>
-        <div className={styles.buttonGroup}>
-          <EditOutlined
-            onClick={() => startEdit(tincture)}
-            className={classNames([styles.icon])}
-          />
-          <Popconfirm
-            placement="left"
-            title={'Вы уверены?'}
-            description={'Точно удалить?'}
-            okText="Да"
-            cancelText="Нет"
-            onConfirm={() => deleteHandler()}
-          >
-            <DeleteOutlined
-              className={classNames([styles.icon__delete, styles.icon])}
+      debouncedChanger(tincture, newQty);
+    };
+
+    return (
+      <li className={styles.tinctureListItem}>
+        <div>
+          <span>{name}</span>
+          <div className={styles.buttonGroup}>
+            <EditOutlined
+              onClick={() => startEdit(tincture)}
+              className={classNames([styles.icon])}
             />
-          </Popconfirm>
+            <Popconfirm
+              placement="left"
+              title={'Вы уверены?'}
+              description={'Точно удалить?'}
+              okText="Да"
+              cancelText="Нет"
+              onConfirm={() => deleteHandler({ id: id })}
+            >
+              <DeleteOutlined
+                className={classNames([styles.icon__delete, styles.icon])}
+              />
+            </Popconfirm>
+          </div>
         </div>
-      </div>
-      <ProgressBar
-        quantity={{
-          actual_quantity: changing ? bufferQuantity : actual_quantity,
-          recommended_quantity,
-        }}
-        quantityChanger={handleChangeQuantity}
-      />
-    </li>
-  );
-};
+        <ProgressBar
+          quantity={{
+            actual_quantity: changing ? bufferQuantity : actual_quantity,
+            recommended_quantity,
+          }}
+          quantityChanger={handleChangeQuantity}
+        />
+      </li>
+    );
+  }
+);
 
 export default TinctureListItem;

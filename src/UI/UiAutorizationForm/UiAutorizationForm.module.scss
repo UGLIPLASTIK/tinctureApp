@@ -1,0 +1,38 @@
+@use '../../variables' as vars;
+
+.UiAutorizationForm {
+  background-color: #fff;
+  color: vars.$main-text-color-dark;
+  text-shadow: none;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 0 auto;
+  border-radius: 15px;
+  text-align: center;
+
+  label {
+    position: relative;
+    .errorMessage {
+      color: tomato;
+      font-size: 12px;
+      position: absolute;
+      transform: translate(50%, -6%);
+    }
+  }
+  input {
+    width: 90%;
+    border: 2px solid rgb(184, 182, 182);
+    border-radius: 10px;
+    padding: 4px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    &[type='number']::-webkit-outer-spin-button,
+    &[type='number']::-webkit-inner-spin-button {
+      -webkit-appearance: none; /* Chrome, Safari, Edge */
+      margin: 0;
+    }
+  }
+}

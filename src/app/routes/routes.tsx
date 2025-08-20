@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import NotFoundPage from '../../pages/NotFoundPage';
-import ListWrapper from '@/pages/ListWrapper';
+import ListWrapper from '@/components/ListWrapper';
 import App from '../App';
 import { LazyHomePage } from '@/pages/LazyPages';
 

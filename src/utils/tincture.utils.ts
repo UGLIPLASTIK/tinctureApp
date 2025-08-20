@@ -9,7 +9,13 @@ export function calculateProgress({
   return Math.min(progress, 100);
 }
 
-export function sortTinctures(items: Tincture[], sorting: boolean) {
+export function sortTinctures(
+  items: Tincture[],
+  sorting: boolean,
+  sortOnDefault: boolean
+) {
+  if (sortOnDefault)
+    return [...items].sort((a, b) => a.name.localeCompare(b.name, 'ru'));
   const sortedItems = [...items].sort(
     (
       { actual_quantity: aActual, recommended_quantity: aRecommended },

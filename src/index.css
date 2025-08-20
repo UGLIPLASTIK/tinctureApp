@@ -47,7 +47,7 @@ body {
   background-image: url(./assets/background.jpg);
   background-position: center;
   background-size: cover;
-  backdrop-filter: blur(4px);
+  /* backdrop-filter: blur(4px); */
 }
 
 /* Set shorter line heights on headings and interactive elements */

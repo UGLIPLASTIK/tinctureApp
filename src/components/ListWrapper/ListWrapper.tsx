@@ -1,10 +1,10 @@
 import TinctureList from '@/components/TinctureList';
 import { selectListBySector } from '@/store/slices/tincturesSlice/tincturesSelectors';
+import { setCurrentSector } from '@/store/slices/tincturesSlice/tincturesSlice';
 import type { Sector, Tincture } from '@/types';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { setCurrentSector } from '@/store/slices/tincturesSlice/tincturesSlice';
 
 const ListWrapper = () => {
   const location = useLocation();
