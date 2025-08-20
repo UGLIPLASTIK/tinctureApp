@@ -24,6 +24,7 @@ const TinctureList = ({ list, title }: Props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [sorting, setSorting] = useState(true);
   const [defaultSorting, setDefaultSorting] = useState(true);
+  const [hideButtons, setHideButtons] = useState(true);
   const dispatch = useDispatch();
 
   const startEdit = (item: Tincture) => {
@@ -60,8 +61,12 @@ const TinctureList = ({ list, title }: Props) => {
         isOpen={modalIsOpen}
         onClose={() => closeModal()}
       />
-      <div className={styles.header}>
-        <h3 className={classNames('text-3xl', 'font-bold')}>{title}</h3>
+      <div
+        className={classNames([
+          styles.sortingBtns,
+          hideButtons ? styles['sortingBtns__hidden'] : '',
+        ])}
+      >
         <UiBtn
           theme="light"
           action={handleSorting}
@@ -76,6 +81,13 @@ const TinctureList = ({ list, title }: Props) => {
           action={handleDefaultSorting}
           styleClass={['sortingBtn', 'sortingBtn__alphaSort']}
         />
+        <button
+          className={styles.hideBtn}
+          onClick={() => setHideButtons((prev) => !prev)}
+        ></button>
+      </div>
+      <div className={styles.header}>
+        <h3 className={classNames('text-2xl', 'font-bold')}>{title}</h3>
       </div>
       <ul>
         {list.length ? (
