@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import UiBtn from '../UiBtn';
-import styles from './UiForm.module.scss';
+import styles from './uiForm.module.scss';
 
 type Props = {
   addTincture: (item: Omit<Tincture, 'id'>) => void;

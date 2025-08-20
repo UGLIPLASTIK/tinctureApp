@@ -1,16 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Role } from '@/types';
 import { roleMap } from '@/config/roles';
+import type { Role } from '@/types';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 type state = {
   role: Role | null;
   incorrect: boolean;
+  key: string | null;
 };
 
 const initialState: state = {
   role: null,
   incorrect: false,
+  key: null,
+};
+
+const saveToken = (token: string) => {
+  localStorage.setItem('nekrasovka-access-key', token);
+  sessionStorage.setItem('nekrasovka-access-key', token);
 };
 
 const autorizationSlice = createSlice({
@@ -23,11 +30,22 @@ const autorizationSlice = createSlice({
       if (role) {
         state.role = role;
         state.incorrect = false;
+        saveToken(action.payload);
       } else {
         state.role = null;
         state.incorrect = true;
+        saveToken(action.payload);
       }
     },
+    // setToken: (state, action: PayloadAction<string>) => {
+    //   state.key = action.payload;
+    //   saveToken(action.payload);
+    // },
+    // clearToken: (state, action: PayloadAction<string>) => {
+    //   state.key = action.payload;
+    //   localStorage.removeItem('nekrasovka-access-key');
+    //   sessionStorage.removeItem('nekrasovka-access-key');
+    // },
   },
 });
 

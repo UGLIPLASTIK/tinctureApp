@@ -11,7 +11,7 @@
 .uiModal {
   min-width: 100px;
   min-height: 100px;
-  // background-color: #fff;
+
   position: fixed;
   top: 50vw;
   left: 50vw;
@@ -24,38 +24,3 @@
     cursor: pointer;
   }
 }
-
-// .form {
-//   background-color: #fff;
-//   color: vars.$main-text-color-dark;
-//   width: 60%;
-//   padding: 20px;
-//   display: flex;
-//   flex-direction: column;
-//   gap: 10px;
-//   margin: 0 auto;
-//   border-radius: 15px;
-//   position: relative;
-//   text-align: center;
-//   .closeBtn {
-//     position: absolute;
-//     right: 0;
-//     font-size: 1.5rem;
-//     transform: translateX(30px);
-//     cursor: pointer;
-//   }
-//   label {
-//     span {
-//       display: inline-block;
-//       margin-bottom: 8px;
-//     }
-//   }
-//   input {
-//     width: 90%;
-//     border: 2px solid rgb(184, 182, 182);
-//     border-radius: 10px;
-//     padding: 4px;
-//     display: block;
-//     margin: 0 auto;
-//   }
-// }
