@@ -1,13 +1,26 @@
-$shadow-color: #1014ec;
+@use '../../variables' as vars;
 
 .tinctureListItem {
   color: #fff;
-  text-shadow: 0 0 5px $shadow-color, 0 0 10px $shadow-color,
-    0 0 20px $shadow-color, 0 0 40px $shadow-color;
+  text-shadow: 0 0 5px vars.$shadow-color, 0 0 10px vars.$shadow-color,
+    0 0 20px vars.$shadow-color, 0 0 40px vars.$shadow-color;
   display: flex;
+  padding: 10px;
   justify-content: center;
   flex-direction: column;
   position: relative;
+  cursor: pointer;
+  transition: 200ms;
+
+  &__selected {
+    transform: scale(1.1);
+    background-color: vars.$shadow-color;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    outline: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
 
   .buttonGroup {
     position: absolute;

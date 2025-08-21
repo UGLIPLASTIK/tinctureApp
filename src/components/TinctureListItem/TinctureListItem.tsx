@@ -12,8 +12,10 @@ import { useEditTinctureMutation } from '@/store/api';
 type Props = {
   tincture: Tincture;
   isAdmin: boolean;
+  isSelected: boolean;
   deleteHandler: (body: Pick<Tincture, 'id'>) => void;
   startEdit: (item: Tincture) => void;
+  onClick: (item: Tincture) => void;
 };
 
 const TinctureListItem = ({
@@ -21,6 +23,8 @@ const TinctureListItem = ({
   deleteHandler,
   startEdit,
   isAdmin,
+  onClick,
+  isSelected,
 }: Props) => {
   const { actual_quantity, name, recommended_quantity, id } = tincture;
   const [changing, setChanging] = useState(false);
@@ -51,7 +55,13 @@ const TinctureListItem = ({
   };
 
   return (
-    <li className={styles.tinctureListItem}>
+    <li
+      onClick={() => onClick(tincture)}
+      className={classNames([
+        styles.tinctureListItem,
+        isSelected ? styles['tinctureListItem__selected'] : '',
+      ])}
+    >
       <div>
         <span>{name}</span>
         <div
@@ -79,6 +89,7 @@ const TinctureListItem = ({
         </div>
       </div>
       <ProgressBar
+        visible={isSelected}
         quantity={{
           actual_quantity: changing ? bufferQuantity : actual_quantity,
           recommended_quantity,

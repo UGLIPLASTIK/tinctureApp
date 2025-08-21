@@ -13,6 +13,7 @@ import TinctureListItem from '../TinctureListItem';
 import TinctureModalContainer from '../TinctureModalContainer';
 import styles from './tinctureList.module.scss';
 import { getAutorizationData } from '@/store/slices/autorizationSlice/autorizationSelectors';
+import { editingItem } from '@/store/slices/operationSlice/operationSelectors';
 
 type Props = {
   list: Tincture[];
@@ -29,12 +30,21 @@ const TinctureList = ({ list, title }: Props) => {
   const dispatch = useDispatch();
   const { currentRole } = useSelector(getAutorizationData);
   const isAdmin = currentRole === 'admin';
+  const selectedItem = useSelector(editingItem);
+  const selectedId = selectedItem?.id;
 
   const startEdit = useCallback(
     (item: Tincture) => {
       dispatch(switchEditing(true));
       dispatch(setEditingItem(item));
       setModalIsOpen(true);
+    },
+    [dispatch]
+  );
+
+  const selectItem = useCallback(
+    (tin: Tincture) => {
+      dispatch(setEditingItem(tin));
     },
     [dispatch]
   );
@@ -102,11 +112,13 @@ const TinctureList = ({ list, title }: Props) => {
         {list.length ? (
           sortedItems.map((tin) => (
             <TinctureListItem
+              onClick={selectItem}
               isAdmin={isAdmin}
               startEdit={startEdit}
               key={tin.id}
               tincture={tin}
               deleteHandler={handleDeleteTincture}
+              isSelected={tin.id === selectedId}
             />
           ))
         ) : (

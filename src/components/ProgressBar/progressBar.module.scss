@@ -4,12 +4,31 @@
     cursor: pointer;
   }
   .progressControll {
+    height: 70px;
     position: absolute;
     font-size: 1.3rem;
     right: 0;
     top: 0;
     display: flex;
+    flex-direction: column;
+    bottom: 0;
     gap: 5px;
-    transform: translate(35px, -5px);
+    transform: translate(50px, -50%);
+    &__hidden {
+      display: none;
+    }
+    .quantBtn {
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      width: 30px;
+      height: 30px;
+      &__plus {
+        background-image: url('../../assets/plus-square-svgrepo-com.svg');
+      }
+      &__minus {
+        background-image: url('../../assets/minus-square-svgrepo-com.svg');
+      }
+    }
   }
 }
