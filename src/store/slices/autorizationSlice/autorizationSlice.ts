@@ -41,14 +41,15 @@ const autorizationSlice = createSlice({
     //   state.key = action.payload;
     //   saveToken(action.payload);
     // },
-    // clearToken: (state, action: PayloadAction<string>) => {
-    //   state.key = action.payload;
-    //   localStorage.removeItem('nekrasovka-access-key');
-    //   sessionStorage.removeItem('nekrasovka-access-key');
-    // },
+    clearToken: (state) => {
+      state.key = null;
+      state.role = null;
+      localStorage.removeItem('nekrasovka-access-key');
+      sessionStorage.removeItem('nekrasovka-access-key');
+    },
   },
 });
 
-export const { setRole } = autorizationSlice.actions;
+export const { setRole, clearToken } = autorizationSlice.actions;
 
 export default autorizationSlice.reducer;

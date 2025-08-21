@@ -7,11 +7,12 @@ import type { Sector, Tincture } from '@/types';
 import UiBtn from '@/UI/UiBtn';
 import { sortTinctures } from '@/utils/tincture.utils';
 import classNames from 'classnames';
-import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import TinctureListItem from '../TinctureListItem';
 import TinctureModalContainer from '../TinctureModalContainer';
 import styles from './tinctureList.module.scss';
+import { getAutorizationData } from '@/store/slices/autorizationSlice/autorizationSelectors';
 
 type Props = {
   list: Tincture[];
@@ -26,12 +27,17 @@ const TinctureList = ({ list, title }: Props) => {
   const [defaultSorting, setDefaultSorting] = useState(true);
   const [hideButtons, setHideButtons] = useState(true);
   const dispatch = useDispatch();
+  const { currentRole } = useSelector(getAutorizationData);
+  const isAdmin = currentRole === 'admin';
 
-  const startEdit = (item: Tincture) => {
-    dispatch(switchEditing(true));
-    dispatch(setEditingItem(item));
-    setModalIsOpen(true);
-  };
+  const startEdit = useCallback(
+    (item: Tincture) => {
+      dispatch(switchEditing(true));
+      dispatch(setEditingItem(item));
+      setModalIsOpen(true);
+    },
+    [dispatch]
+  );
 
   const handleSorting = () => {
     setDefaultSorting(false);
@@ -53,7 +59,10 @@ const TinctureList = ({ list, title }: Props) => {
     dispatch(switchEditing(false));
   };
 
-  const sortedItems = sortTinctures(list, sorting, defaultSorting);
+  const sortedItems = useMemo(
+    () => sortTinctures(list, sorting, defaultSorting),
+    [list, sorting, defaultSorting]
+  );
 
   return (
     <div className={styles.list}>
@@ -93,6 +102,7 @@ const TinctureList = ({ list, title }: Props) => {
         {list.length ? (
           sortedItems.map((tin) => (
             <TinctureListItem
+              isAdmin={isAdmin}
               startEdit={startEdit}
               key={tin.id}
               tincture={tin}
@@ -106,6 +116,7 @@ const TinctureList = ({ list, title }: Props) => {
           theme={'light'}
           action={() => setModalIsOpen(true)}
           text="Добавить"
+          hidden={!isAdmin}
         />
       </ul>
     </div>

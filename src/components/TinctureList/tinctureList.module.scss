@@ -4,6 +4,8 @@
   text-align: center;
   padding: 30px;
   color: vars.$main-text-color;
+  max-width: 1000px;
+  margin: 0 auto;
   .sortingBtns {
     padding: 5px;
     position: fixed;
@@ -56,5 +58,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+  .hidden {
+    display: none;
   }
 }

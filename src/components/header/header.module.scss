@@ -1,10 +1,16 @@
 @use '../../variables' as vars;
 
 .header {
-  // position: relative;
   height: 60px;
   background-color: vars.$main-color;
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 15px;
+
+  padding: 0 60px;
+  .headerContent {
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+  }
 }

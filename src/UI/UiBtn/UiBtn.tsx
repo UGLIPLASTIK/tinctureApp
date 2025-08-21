@@ -5,10 +5,17 @@ type Props = {
   theme?: 'light' | 'dark';
   action?: () => void;
   styleClass?: string[];
+  hidden?: boolean;
 };
 
-const UiBtn = ({ text, action, theme = 'dark', styleClass = [] }: Props) => {
-  return (
+const UiBtn = ({
+  text,
+  action,
+  theme = 'dark',
+  styleClass = [],
+  hidden = false,
+}: Props) => {
+  return hidden ? null : (
     <button
       className={classNames([
         styles.uiBtn,
