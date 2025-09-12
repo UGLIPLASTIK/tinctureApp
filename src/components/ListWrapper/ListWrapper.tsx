@@ -19,6 +19,7 @@ const ListWrapper = () => {
     base: 'Основные настойки',
     bonus: 'Бонусные настойки',
     test: 'Тестовые настойки',
+    guest: 'Наши настойки',
   };
   const tinctures = useSelector(selectListBySector);
 
