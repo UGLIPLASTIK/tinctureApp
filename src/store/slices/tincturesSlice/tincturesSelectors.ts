@@ -14,3 +14,7 @@ export const selectListBySector = createSelector(
       : [];
   }
 );
+
+export const tincturesInStock = createSelector([allTinctures], (tin) => {
+  return tin.filter((tin) => tin.actual_quantity > 0);
+});

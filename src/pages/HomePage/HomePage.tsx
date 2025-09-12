@@ -44,6 +44,9 @@ const HomePage = () => {
           <li onClick={() => setSector('test')}>
             <Link to={'/test'}>Тестовые настойки</Link>
           </li>
+          <li onClick={() => setSector('guest')}>
+            <Link to={'/guest'}>Гостевой список</Link>
+          </li>
         </ul>
       ) : (
         <UiModal onClose={() => {}} isOpen={!currentRole}>

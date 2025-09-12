@@ -3,6 +3,7 @@ import NotFoundPage from '../../pages/NotFoundPage';
 import ListWrapper from '@/components/ListWrapper';
 import App from '../App';
 import { LazyHomePage } from '@/pages/LazyPages';
+import GuestPage from '@/pages/GuestPage';
 
 const MainRouter = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const MainRouter = createBrowserRouter([
       { path: '/base', element: <ListWrapper /> },
       { path: '/test', element: <ListWrapper /> },
       { path: '/bonus', element: <ListWrapper /> },
+      { path: '/guest', element: <GuestPage /> },
     ],
   },
 ]);

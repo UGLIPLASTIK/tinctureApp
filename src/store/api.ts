@@ -4,7 +4,7 @@ import type { Tincture } from '../types';
 export const tinctureApi = createApi({
   reducerPath: 'tinctureApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://my-tinctures-new-api-production.up.railway.app/',
+    baseUrl: 'https://my-tinctures-new-api.onrender.com/',
   }),
   tagTypes: ['tinctures'],
   endpoints: (build) => ({
