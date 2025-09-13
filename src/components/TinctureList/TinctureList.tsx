@@ -3,7 +3,7 @@ import {
   setEditingItem,
   switchEditing,
 } from '@/store/slices/operationSlice/operationSlice';
-import type { Sector, Tincture } from '@/types';
+import type { Tincture } from '@/types';
 import UiBtn from '@/UI/UiBtn';
 import { sortTinctures } from '@/utils/tincture.utils';
 import classNames from 'classnames';
@@ -18,7 +18,6 @@ import { editingItem } from '@/store/slices/operationSlice/operationSelectors';
 type Props = {
   list: Tincture[];
   title: string;
-  sector?: Sector;
 };
 
 const TinctureList = ({ list, title }: Props) => {

@@ -4,9 +4,10 @@ import { tincturesInStock } from '@/store/slices/tincturesSlice/tincturesSelecto
 
 const GuestPage = () => {
   const list = useSelector(tincturesInStock);
-  console.log(list);
+
   return (
     <div className={styles.guestPage}>
+      <h3>Наши настойки</h3>
       <ul>
         {list.map((item) => (
           <li key={item.id}>{item.name}</li>

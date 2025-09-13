@@ -19,7 +19,6 @@ const ListWrapper = () => {
     base: 'Основные настойки',
     bonus: 'Бонусные настойки',
     test: 'Тестовые настойки',
-    guest: 'Наши настойки',
   };
   const tinctures = useSelector(selectListBySector);
 
@@ -27,7 +26,6 @@ const ListWrapper = () => {
     <TinctureList
       title={listTitles[listSector]}
       list={tinctures as Tincture[]}
-      sector={listSector}
     />
   );
 };

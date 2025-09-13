@@ -7,7 +7,7 @@ export type Tincture = {
   compound?: [string, number][];
 };
 
-export type Sector = 'base' | 'bonus' | 'test' | 'guest';
+export type Sector = 'base' | 'bonus' | 'test';
 
 export type AddTinctureBody = {
   sector: Sector;
