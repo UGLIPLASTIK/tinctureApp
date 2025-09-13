@@ -6,7 +6,15 @@
   ],
    "compilerOptions": {
     "jsx": "react-jsx", 
-    "esModuleInterop": true,
     "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    }
   }
 }
