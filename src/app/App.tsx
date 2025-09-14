@@ -7,7 +7,7 @@ import { useGetTinctureListsQuery } from '../store/api';
 import { setList } from '@/store/slices/tincturesSlice/tincturesSlice';
 
 function App() {
-  const { data: tinctureData } = useGetTinctureListsQuery();
+  const { data: tinctureData, isLoading } = useGetTinctureListsQuery();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function App() {
     <Suspense fallback={<div>Загрузка...</div>}>
       <div>
         <Header />
-        <Outlet />
+        <Outlet context={{ isLoading }} />
         <Footer />
       </div>
     </Suspense>
