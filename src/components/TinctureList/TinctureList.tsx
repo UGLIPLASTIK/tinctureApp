@@ -14,6 +14,7 @@ import TinctureModalContainer from '../TinctureModalContainer';
 import styles from './tinctureList.module.scss';
 import { getAutorizationData } from '@/store/slices/autorizationSlice/autorizationSelectors';
 import { editingItem } from '@/store/slices/operationSlice/operationSelectors';
+import TincturesStats from '@/widgets/TincturesStats';
 
 type Props = {
   list: Tincture[];
@@ -129,6 +130,7 @@ const TinctureList = ({ list, title }: Props) => {
           text="Добавить"
           hidden={!isAdmin}
         />
+        <TincturesStats items={list} />
       </ul>
     </div>
   );

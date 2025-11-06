@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { Tincture } from '../types';
 
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 export const tinctureApi = createApi({
   reducerPath: 'tinctureApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://my-tinctures-new-api.onrender.com/',
-    // baseUrl: 'http://localhost:3000/',
+    baseUrl: baseUrl,
   }),
   tagTypes: ['tinctures'],
   endpoints: (build) => ({
