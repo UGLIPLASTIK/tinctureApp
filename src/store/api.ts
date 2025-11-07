@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { Tincture } from '../types';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
+console.log(baseUrl);
 
 export const tinctureApi = createApi({
   reducerPath: 'tinctureApi',
