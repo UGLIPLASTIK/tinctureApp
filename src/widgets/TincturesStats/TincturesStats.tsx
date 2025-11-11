@@ -1,9 +1,8 @@
-// import { tincturesInStock } from '../../store/slices/tincturesSlice/tincturesSelectors';
+import type { InputNumberProps } from 'antd';
+import { Slider } from 'antd';
 import { useState } from 'react';
 import { type Tincture } from '../../types';
 import styles from './TincturesStats.module.scss';
-import type { InputNumberProps } from 'antd';
-import { InputNumber, Slider } from 'antd';
 
 type Props = {
   items: Tincture[];
@@ -11,7 +10,7 @@ type Props = {
 
 const TincturesStats = ({ items }: Props) => {
   const [hidden, setHidden] = useState(true);
-  const [percent, setPercent] = useState(100);
+  const [percent, setPercent] = useState(50);
 
   const onChange: InputNumberProps['onChange'] = (newValue) => {
     setPercent(newValue as number);
@@ -29,57 +28,44 @@ const TincturesStats = ({ items }: Props) => {
   }, 0);
 
   return (
-    <div>
+    <div className={styles.stats}>
       <div>{`${tinctsInStock} / ${allTinctsCount}`}</div>
       <div>{`${litersInStock} л. / ${totalLiters} л.`}</div>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+      <div className={styles.value}>
         <div>Нужно сделать еще: {totalLiters - litersInStock} л.</div>
-        <button
-          style={{
-            transform: hidden ? 'rotate(90deg)' : 'rotate(270deg)',
-            cursor: 'pointer',
-          }}
-          onClick={() => setHidden((prew) => !prew)}
-        >
-          {'>'}
-        </button>
       </div>
-      <Slider
-        min={1}
-        max={100}
-        onChange={onChange}
-        value={typeof percent === 'number' ? percent : 0}
-      />
-      <InputNumber
-        min={1}
-        max={100}
-        style={{ margin: '0 16px' }}
-        value={percent}
-        onChange={onChange}
-      />
-      <div
-        // style={{ textAlign: 'left', margin: '0 auto' }}
-        className={styles.details}
-        hidden={hidden}
-      >
-        {items
-          .filter((item) => {
-            const itemPercent = Math.trunc(
-              item.actual_quantity / (item.recommended_quantity / 100)
-            );
-            // console.log(
-            //   `item current pencent: ${
-            //     item.actual_quantity / (item.recommended_quantity / 100)
-            //   }`
-            // );
-            return itemPercent <= percent;
-          })
-          .map((item) => (
-            <div key={item.id}>{`${item.name} ${
-              item.recommended_quantity - item.actual_quantity
-            }`}</div>
-          ))}
+
+      <div className={styles.needList} hidden={hidden}>
+        <div className={styles.showFrom}>Показать меньше: {percent}%</div>
+        <Slider
+          min={1}
+          max={100}
+          onChange={onChange}
+          value={typeof percent === 'number' ? percent : 0}
+        />
+        <ul className={styles.details} hidden={hidden}>
+          {items
+            .filter((item) => {
+              const itemPercent = Math.trunc(
+                item.actual_quantity / (item.recommended_quantity / 100)
+              );
+              return itemPercent < percent;
+            })
+            .map((item) => (
+              <li key={item.id}>{`${item.name} ${
+                item.recommended_quantity - item.actual_quantity
+              }`}</li>
+            ))}
+        </ul>
       </div>
+      <button
+        style={{
+          transform: hidden
+            ? 'rotate(0deg) translateY(-50%)'
+            : 'rotate(180deg) translateY(50%)',
+        }}
+        onClick={() => setHidden((prew) => !prew)}
+      ></button>
     </div>
   );
 };
