@@ -3,7 +3,7 @@ import classNames from 'classnames';
 type Props = {
   text?: string;
   theme?: 'light' | 'dark';
-  action?: () => void;
+  action?: (() => void) | (() => Promise<void>);
   styleClass?: string[];
   hidden?: boolean;
 };

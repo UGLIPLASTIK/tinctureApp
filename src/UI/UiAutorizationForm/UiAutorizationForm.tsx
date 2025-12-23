@@ -1,8 +1,12 @@
-import UiBtn from '../UiBtn';
-import styles from './UiAutorizationForm.module.scss';
+import {
+  getAutorizationData,
+  isIncorrect,
+} from '@/store/slices/autorizationSlice/autorizationSelectors';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { isIncorrect } from '@/store/slices/autorizationSlice/autorizationSelectors';
 import { useSelector } from 'react-redux';
+import UiBtn from '../UiBtn';
+import UiModal from '../UiModal';
+import styles from './UiAutorizationForm.module.scss';
 
 type Props = {
   onSubmitFn: (key: string) => void;
@@ -15,31 +19,35 @@ type FormValues = {
 const UiAutorizationForm = ({ onSubmitFn }: Props) => {
   const { register, handleSubmit } = useForm<FormValues>();
   const incorrect = useSelector(isIncorrect);
+  const autorizationData = useSelector(getAutorizationData);
+  const { currentRole } = autorizationData;
 
   const onSubmit: SubmitHandler<FormValues> = ({ accessKey }) => {
     onSubmitFn(accessKey.toString());
   };
 
   return (
-    <form
-      className={styles.UiAutorizationForm}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <label>
+    <UiModal onClose={() => {}} isOpen={!currentRole}>
+      <form
+        className={styles.UiAutorizationForm}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <label>
-          Введите ключ доступа
-          <input
-            type="number"
-            {...register('accessKey', {
-              required: true,
-            })}
-          />
-          {incorrect && <p className={styles.errorMessage}>Неверный ключ</p>}
+          <label>
+            Введите ключ доступа
+            <input
+              type="number"
+              {...register('accessKey', {
+                required: true,
+              })}
+            />
+            {incorrect && <p className={styles.errorMessage}>Неверный ключ</p>}
+          </label>
         </label>
-      </label>
 
-      <UiBtn text={'Подтвердить'} />
-    </form>
+        <UiBtn text={'Подтвердить'} />
+      </form>
+    </UiModal>
   );
 };
 

@@ -1,10 +1,11 @@
-import { Outlet } from 'react-router-dom';
-import Header from '../components/header';
-import Footer from '../components/Footer';
-import { useDispatch } from 'react-redux';
-import { Suspense, useEffect } from 'react';
-import { useGetTinctureListsQuery } from '../store/api';
 import { setList } from '@/store/slices/tincturesSlice/tincturesSlice';
+import UiSessionModal from '@/UI/UiSessionModal';
+import { Suspense, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Outlet } from 'react-router-dom';
+import Footer from '../components/Footer';
+import Header from '../components/header';
+import { useGetTinctureListsQuery } from '../store/api';
 
 function App() {
   const { data: tinctureData, isLoading } = useGetTinctureListsQuery();
@@ -23,6 +24,7 @@ function App() {
         <Outlet context={{ isLoading }} />
         <Footer />
       </div>
+      <UiSessionModal />
     </Suspense>
   );
 }

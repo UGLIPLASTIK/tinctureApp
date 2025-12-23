@@ -3,6 +3,7 @@
 .header {
   height: 60px;
   background-color: vars.$main-color;
+  position: relative;
 
   padding: 0 60px;
   .headerContent {

@@ -3,6 +3,12 @@
   button {
     cursor: pointer;
   }
+  .progress {
+    span {
+      width: 60px !important;
+      text-align: right;
+    }
+  }
   .progressControll {
     height: 70px;
     position: absolute;

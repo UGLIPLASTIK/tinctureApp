@@ -1,8 +1,6 @@
-import { getAutorizationData } from '@/store/slices/autorizationSlice/autorizationSelectors';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import { useEffect, type ReactNode } from 'react';
-import { useSelector } from 'react-redux';
 import styles from './uiModal.module.scss';
 
 type Props = {
@@ -12,9 +10,6 @@ type Props = {
 };
 
 const UiModal = ({ onClose, isOpen, children }: Props) => {
-  const autorizationData = useSelector(getAutorizationData);
-  const { currentRole } = autorizationData;
-
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -39,7 +34,6 @@ const UiModal = ({ onClose, isOpen, children }: Props) => {
     >
       <div className={styles.uiModal}>
         <CloseCircleOutlined
-          style={!currentRole ? { display: 'none' } : {}}
           onClick={() => onClose()}
           className={styles.closeBtn}
         />

@@ -2,12 +2,13 @@ import { getAutorizationData } from '@/store/slices/autorizationSlice/autorizati
 import { setRole } from '@/store/slices/autorizationSlice/autorizationSlice';
 import type { Sector } from '@/types';
 import UiAutorizationForm from '@/UI/UiAutorizationForm';
-import UiModal from '@/UI/UiModal';
 import { setCurrentSector } from '@store/slices/tincturesSlice/tincturesSlice';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './homePage.module.scss';
+
+// import { setSessionModalIsOpen } from '@/store/slices/operationSlice/operationSlice';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -46,9 +47,7 @@ const HomePage = () => {
           </li>
         </ul>
       ) : (
-        <UiModal onClose={() => {}} isOpen={!currentRole}>
-          <UiAutorizationForm onSubmitFn={checkKey} />
-        </UiModal>
+        <UiAutorizationForm onSubmitFn={checkKey} />
       )}
     </div>
   );

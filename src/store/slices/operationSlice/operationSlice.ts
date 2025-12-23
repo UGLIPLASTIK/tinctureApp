@@ -23,9 +23,14 @@ const operationSlice = createSlice({
     setEditingItem: (state, action: PayloadAction<Tincture>) => {
       state.editingItem = action.payload;
     },
+    clearEditData: (state) => {
+      state.editing = initialState.editing;
+      state.editingItem = initialState.editingItem;
+    },
   },
 });
 
-export const { switchEditing, setEditingItem } = operationSlice.actions;
+export const { switchEditing, setEditingItem, clearEditData } =
+  operationSlice.actions;
 
 export default operationSlice.reducer;

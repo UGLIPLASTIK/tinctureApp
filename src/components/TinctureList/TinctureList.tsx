@@ -1,4 +1,7 @@
 import { useDeleteTinctureMutation } from '@/store/api';
+import { getAutorizationData } from '@/store/slices/autorizationSlice/autorizationSelectors';
+import { setTinctureModalIsOpen } from '@/store/slices/intefaceSlice/intefaceSlice';
+import { editingItem } from '@/store/slices/operationSlice/operationSelectors';
 import {
   setEditingItem,
   switchEditing,
@@ -6,15 +9,13 @@ import {
 import type { Tincture } from '@/types';
 import UiBtn from '@/UI/UiBtn';
 import { sortTinctures } from '@/utils/tincture.utils';
+import TincturesStats from '@/widgets/TincturesStats';
 import classNames from 'classnames';
 import { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TinctureListItem from '../TinctureListItem';
 import TinctureModalContainer from '../TinctureModalContainer';
 import styles from './tinctureList.module.scss';
-import { getAutorizationData } from '@/store/slices/autorizationSlice/autorizationSelectors';
-import { editingItem } from '@/store/slices/operationSlice/operationSelectors';
-import TincturesStats from '@/widgets/TincturesStats';
 
 type Props = {
   list: Tincture[];
@@ -23,7 +24,6 @@ type Props = {
 
 const TinctureList = ({ list, title }: Props) => {
   const [deleteTincture, { error }] = useDeleteTinctureMutation();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [sorting, setSorting] = useState(true);
   const [defaultSorting, setDefaultSorting] = useState(true);
   const [hideButtons, setHideButtons] = useState(true);
@@ -37,7 +37,7 @@ const TinctureList = ({ list, title }: Props) => {
     (item: Tincture) => {
       dispatch(switchEditing(true));
       dispatch(setEditingItem(item));
-      setModalIsOpen(true);
+      dispatch(setTinctureModalIsOpen());
     },
     [dispatch]
   );
@@ -64,11 +64,6 @@ const TinctureList = ({ list, title }: Props) => {
     [deleteTincture, error]
   );
 
-  const closeModal = () => {
-    setModalIsOpen((prev) => !prev);
-    dispatch(switchEditing(false));
-  };
-
   const sortedItems = useMemo(
     () => sortTinctures(list, sorting, defaultSorting),
     [list, sorting, defaultSorting]
@@ -76,10 +71,7 @@ const TinctureList = ({ list, title }: Props) => {
 
   return (
     <div className={styles.list}>
-      <TinctureModalContainer
-        isOpen={modalIsOpen}
-        onClose={() => closeModal()}
-      />
+      <TinctureModalContainer />
       <div
         className={classNames([
           styles.sortingBtns,
@@ -105,10 +97,8 @@ const TinctureList = ({ list, title }: Props) => {
           onClick={() => setHideButtons((prev) => !prev)}
         ></button>
       </div>
-      <div className={styles.header}>
-        <h3 className={classNames('text-2xl', 'font-bold')}>{title}</h3>
-      </div>
       <ul>
+        <h3 className={classNames('text-2xl', 'font-bold')}>{title}</h3>
         {list.length ? (
           sortedItems.map((tin) => (
             <TinctureListItem
@@ -126,11 +116,11 @@ const TinctureList = ({ list, title }: Props) => {
         )}
         <UiBtn
           theme={'light'}
-          action={() => setModalIsOpen(true)}
+          action={() => dispatch(setTinctureModalIsOpen())}
           text="Добавить"
           hidden={!isAdmin}
         />
-        <TincturesStats items={list} />
+        <TincturesStats items={sortedItems} />
       </ul>
     </div>
   );

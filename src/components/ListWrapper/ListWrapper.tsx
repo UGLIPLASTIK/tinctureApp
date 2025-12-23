@@ -31,10 +31,12 @@ const ListWrapper = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <TinctureList
-      title={listTitles[listSector]}
-      list={tinctures as Tincture[]}
-    />
+    <div>
+      <TinctureList
+        title={listTitles[listSector]}
+        list={tinctures as Tincture[]}
+      />
+    </div>
   );
 };
 

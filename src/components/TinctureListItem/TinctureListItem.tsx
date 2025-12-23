@@ -3,11 +3,14 @@ import { debounce } from '@/utils/utils';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Popconfirm } from 'antd';
 import classNames from 'classnames';
-import { useReducer, useState, useMemo, memo } from 'react';
+import { useReducer, useState, useMemo, memo, useCallback } from 'react';
 import ProgressBar from '../ProgressBar';
 import styles from './tinctureListItem.module.scss';
 import { reducerQauntity } from './TinctureListItem.utils';
 import { useEditTinctureMutation } from '@/store/api';
+import { addToSession } from '@/store/slices/tincturesSlice/tincturesSlice';
+// import { addItemToSession } from './TinctureListItem.utils';
+import { useDispatch } from 'react-redux';
 
 type Props = {
   tincture: Tincture;
@@ -29,6 +32,8 @@ const TinctureListItem = ({
   const { actual_quantity, name, recommended_quantity, id } = tincture;
   const [changing, setChanging] = useState(false);
   const [editTincture] = useEditTinctureMutation();
+  const [sessionMaked, setSessionMaked] = useState(0);
+  const dispatch = useDispatch();
 
   const [bufferQuantity, dispatchQuantity] = useReducer(
     reducerQauntity,
@@ -43,16 +48,36 @@ const TinctureListItem = ({
     [editTincture]
   );
 
-  const handleChangeQuantity = (action: '+' | '-') => {
-    dispatchQuantity({ type: action });
-    setChanging(true);
-    const newQty =
-      action === '+'
-        ? bufferQuantity + 0.25
-        : Math.max(0, bufferQuantity - 0.25);
+  const handleChangeQuantity = useCallback(
+    (action: '+' | '-') => {
+      dispatchQuantity({ type: action });
+      setChanging(true);
+      const newQty =
+        action === '+'
+          ? bufferQuantity + 0.25
+          : Math.max(0, bufferQuantity - 0.25);
 
-    debouncedChanger(tincture, newQty);
-  };
+      const newSessionMaked = (prev: number) => {
+        if (action === '-' && prev === 0) return prev;
+        return action === '+' ? prev + 0.25 : prev - 0.25;
+      };
+
+      const calculatedSessionMaked = newSessionMaked(sessionMaked);
+
+      setChanging(true);
+      setSessionMaked(calculatedSessionMaked);
+
+      dispatch(
+        addToSession({
+          name: tincture.name,
+          quantity: calculatedSessionMaked,
+        })
+      );
+
+      debouncedChanger(tincture, newQty);
+    },
+    [bufferQuantity, debouncedChanger, dispatch, sessionMaked, tincture]
+  );
 
   return (
     <li

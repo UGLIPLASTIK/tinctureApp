@@ -12,18 +12,10 @@ import styles from './uiForm.module.scss';
 type Props = {
   addTincture: (item: Omit<Tincture, 'id'>) => void;
   editTincture: (item: Tincture) => void;
-  closeModal: () => void;
   list: Tincture[];
-  isOpen: boolean;
 };
 
-const UiForm = ({
-  addTincture,
-  editTincture,
-  list,
-  isOpen,
-  closeModal,
-}: Props) => {
+const UiForm = ({ addTincture, editTincture, list }: Props) => {
   const { editing, editItem } = useSelector(getEditData);
   const sector = useSelector(currentSector);
 
@@ -45,7 +37,9 @@ const UiForm = ({
     if (sector === null) {
       return;
     }
+
     body = { ...body, name: capitalize(body.name), sector };
+
     const includes = list.find((tin) => tin.name == body.name);
     if (includes && !editing) {
       alert('Такое уже есть');
@@ -56,7 +50,7 @@ const UiForm = ({
       } else addTincture(body);
 
       reset();
-      closeModal();
+
       setTimeout(() => {
         setFocus('name');
       }, 0);
@@ -64,23 +58,21 @@ const UiForm = ({
   };
 
   useEffect(() => {
-    if (isOpen) {
-      if (editing) {
-        reset({
-          name: editItem.name || '',
-          actual_quantity: editItem.actual_quantity ?? 0,
-          recommended_quantity: editItem.recommended_quantity ?? 0,
-        });
-      } else {
-        reset({
-          name: '',
-          actual_quantity: 0,
-          recommended_quantity: 0,
-        });
-      }
-      setTimeout(() => setFocus(!editing ? 'name' : 'actual_quantity'), 0);
+    if (editing) {
+      reset({
+        name: editItem.name || '',
+        actual_quantity: editItem.actual_quantity ?? 0,
+        recommended_quantity: editItem.recommended_quantity ?? 0,
+      });
+    } else {
+      reset({
+        name: '',
+        actual_quantity: 0,
+        recommended_quantity: 0,
+      });
     }
-  }, [isOpen, editing, editItem, reset, setFocus]);
+    setTimeout(() => setFocus(!editing ? 'name' : 'actual_quantity'), 0);
+  }, [editing, editItem, reset, setFocus]);
 
   return (
     <form

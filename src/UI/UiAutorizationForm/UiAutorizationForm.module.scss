@@ -31,7 +31,7 @@
     margin-top: 10px;
     &[type='number']::-webkit-outer-spin-button,
     &[type='number']::-webkit-inner-spin-button {
-      -webkit-appearance: none; /* Chrome, Safari, Edge */
+      -webkit-appearance: none;
       margin: 0;
     }
   }

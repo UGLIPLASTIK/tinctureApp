@@ -1,0 +1,11 @@
+@use '../../variables' as vars;
+
+.actionsMenu {
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  background-color: vars.$main-color;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 10;
+}

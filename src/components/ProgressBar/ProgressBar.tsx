@@ -3,6 +3,7 @@ import { ConfigProvider, Progress } from 'antd';
 import styles from './progressBar.module.scss';
 import type { Tincture } from '@/types';
 import classNames from 'classnames';
+import { memo } from 'react';
 
 type Props = {
   quantity: Pick<Tincture, 'actual_quantity' | 'recommended_quantity'>;
@@ -23,6 +24,7 @@ const ProgressBar = ({ quantity, quantityChanger, visible }: Props) => {
     >
       <div className={styles.progressGroup}>
         <Progress
+          className={styles.progress}
           format={() => `${actual_quantity}л / ${recommended_quantity}л`}
           percent={calculateProgress({ actual_quantity, recommended_quantity })}
           size="small"
@@ -52,4 +54,4 @@ const ProgressBar = ({ quantity, quantityChanger, visible }: Props) => {
   );
 };
 
-export default ProgressBar;
+export default memo(ProgressBar);

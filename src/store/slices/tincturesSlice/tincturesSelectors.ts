@@ -3,6 +3,9 @@ import type { RootState } from '../../store';
 import type { Tincture } from '@/types';
 
 const allTinctures = (state: RootState) => state.tinctures.allTinctures;
+
+export const sessionTins = (state: RootState) => state.tinctures.sessionTins;
+
 export const currentSector = (state: RootState) =>
   state.tinctures.currentSector;
 

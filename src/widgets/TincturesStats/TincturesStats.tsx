@@ -1,6 +1,6 @@
 import type { InputNumberProps } from 'antd';
 import { Slider } from 'antd';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { type Tincture } from '../../types';
 import styles from './TincturesStats.module.scss';
 
@@ -70,4 +70,4 @@ const TincturesStats = ({ items }: Props) => {
   );
 };
 
-export default TincturesStats;
+export default memo(TincturesStats);

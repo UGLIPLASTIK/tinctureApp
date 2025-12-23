@@ -20,3 +20,8 @@ export type sortState = {
 };
 
 export type Role = 'admin' | 'user';
+
+export type SessionTin = {
+  name: string;
+  quantity: number;
+};
