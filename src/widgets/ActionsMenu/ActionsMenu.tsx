@@ -6,7 +6,7 @@ import {
 } from '@/store/slices/intefaceSlice/intefaceSlice';
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './ActionsMenu.module.scss';
+import styles from './actionsMenu.module.scss';
 
 const ActionsMenu = () => {
   const dispatch = useDispatch();
